@@ -1,0 +1,1008 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MultiServicios Obaflet</title>
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico">
+  <style>
+    :root {
+      --primary-color: #1a237e;
+      --secondary-color: #0d47a1;
+      --accent-color: #ff6f009c;
+      --background-color: #f5f5f5;
+      --text-color: #212121;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      display: flex;
+      list-style-type: none;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: var(--accent-color);
+    }
+
+    main {
+      margin-top: 80px;
+      padding: 2rem 0;
+    }
+
+    .hero {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img-taller/portada2.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .service-card-content {
+      padding: 1.5rem;
+    }
+
+    .service-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--secondary-color);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn:hover {
+      background-color: #e65100;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100%;
+      background-color: white;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease-in-out;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar-content {
+      padding: 30px;
+      position: relative;
+    }
+
+    .close-sidebar {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .sidebar-main-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-gallery {
+      display: flex;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-gallery img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-right: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .sidebar-image-container {
+      position: relative;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 5px 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #prevArrow {
+      left: 10px;
+    }
+
+    #nextArrow {
+      right: 10px;
+    }
+
+    footer {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 3rem 0;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .footer-section {
+      flex: 1;
+      margin-right: 2rem;
+      min-width: 200px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+      }
+
+      nav ul {
+        margin-top: 1rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+      }
+
+      .footer-section {
+        margin-bottom: 2rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+    }
+
+    .contact-button {
+      position: fixed;
+      right: 20px;
+      color: white;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      width: auto;
+      height: auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .contact-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp-button {
+      width: 120px;
+      height: 45px;
+      bottom: 70px;
+      background-color: #25D366;
+    }
+
+    .chat-button {
+      bottom: 20px;
+      background-color: var(--accent-color);
+    }
+
+    .contact-button i {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .contact-button {
+        padding: 12px 24px;
+        font-size: 18px;
+      }
+
+      .whatsapp-button {
+        width: 130px;
+        bottom: 70px;
+      }
+
+      
+    }
+
+    .chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+      font-size: 14px;
+    }
+
+    .chat-button:hover {
+      background-color: #e65100;
+    }
+
+    .chat-button i {
+      margin-right: 8px;
+      font-size: 1.2em;
+    }
+
+    .chat-button span {
+      font-weight: bold;
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .chat-header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .chat-body {
+      flex-grow: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+    }
+
+    .chat-input input {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .close-modal {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-modal:hover,
+    .close-modal:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #quiz-container {
+      margin-top: 20px;
+    }
+
+    #quiz-container h3 {
+      margin-bottom: 10px;
+    }
+
+    #quiz-container label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #quiz-container button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #quiz-container button:hover {
+      background-color: #e65100;
+    }
+
+    #scheduler-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #scheduler-form input,
+    #scheduler-form select,
+    #scheduler-form textarea {
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">MultiServicios Obaflet</div>
+        <nav>
+          <ul>
+            <li><a href="#home" onclick="smoothScroll('#home', 1000); return false;">Inicio</a></li>
+            <li><a href="#services" onclick="smoothScroll('#services', 1000); return false;">Servicios</a></li>
+            <li><a href="#contact" onclick="smoothScroll('#contact', 1000); return false;">Contacto</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>MultiServicios Obaflet</h1>
+        <p>Expertos en mecánica, electromecánica y venta de repuestos para tu vehículo</p>
+        <a href="#services" class="btn">Descubre nuestros servicios</a>
+        <button id="quiz-button" class="btn" onclick="startQuiz()">Diagnóstico Rápido</button>
+      </div>
+    </section>
+
+    <section id="services" class="container">
+      <h2>Nuestros Servicios</h2>
+      <div class="services">
+        <div class="service-card" data-service="mecanica" onclick="openSidebar('mecanica')">
+          <img src="img-taller/mecanica.jpg" alt="Servicio de Mecánica">
+          <div class="service-card-content">
+            <h3>Mecánica General</h3>
+            <p>Mantenimiento y reparaciones de calidad para tu vehículo</p>
+          </div>
+        </div>
+        <div class="service-card" data-service="electromecanica" onclick="openSidebar('electromecanica')">
+          <img src="img-taller/alternador.jpg" alt="Servicio de Electromecánica">
+          <div class="service-card-content">
+            <h3>Electromecánica</h3>
+            <p>Soluciones para sistemas eléctricos y electrónicos</p>
+          </div>
+        </div>
+        <div class="service-card" data-service="motores" onclick="openSidebar('motores')">
+          <img src="img-taller/Motor hyunda elantra.jpg" alt="Venta de Motores">
+          <div class="service-card-content">
+            <h3>Venta de Motores</h3>
+            <p>Motores nuevos y reconstruidos de alta calidad</p>
+          </div>
+        </div>
+        <div class="service-card" data-service="repuestos" onclick="openSidebar('repuestos')">
+          <img src="img-taller/motoresSuspension.jpg" alt="Venta de Repuestos">
+          <div class="service-card-content">
+            <h3>Repuestos</h3>
+            <p>Amplio inventario de repuestos originales y alternativos</p>
+          </div>
+        </div>
+        <div class="service-card" data-service="enderezado" onclick="openSidebar('enderezado')">
+          <img src="img-taller/chocados/2.jpg" alt="Enderezado y Pintura, Remolque y Trámites INS">
+          <div class="service-card-content">
+            <h3>Enderezado, Pintura y Más</h3>
+            <p>Servicios de enderezado, pintura, remolque y trámites del INS</p>
+          </div>
+        </div>
+        <div class="service-card" data-service="alineamiento" onclick="openSidebar('alineamiento')">
+          <img src="img-taller/tramado/1.jpg" alt="Alineamiento y Tramado">
+          <div class="service-card-content">
+            <h3>Alineamiento y Tramado</h3>
+            <p>Servicio especializado para mejorar la estabilidad y rendimiento de tu vehículo</p>
+          </div>
+        </div>
+        <div class="service-card" data-service="usados" onclick="openSidebar('usados')">
+          <img src="img-taller/usados/7.jpeg" alt="Venta de Vehículos Usados">
+          <div class="service-card-content">
+            <h3>Vehículos Usados</h3>
+            <p>Amplia selección de vehículos usados de calidad</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Contacto</h3>
+          <p><i class="fas fa-phone"></i> +506 61947620</p>
+          <p><i class="fas fa-envelope" onclick="sendEmail(); return false;"></i></p>
+          <p><i class="fas fa-map-marker-alt"></i> Cañas, Guanacaste, Costa Rica</p>
+        </div>
+        <div class="footer-section">
+          <h3>Síguenos</h3>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=100032970073745" target="_blank"><i
+                class="fab fa-facebook"></i></a>
+            <a href="#" onclick="sendEmail(); return false;"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Horario</h3>
+          <p><i class="far fa-clock"></i> Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+          <p><i class="far fa-clock"></i> Sábados: 8:00 AM - 1:00 PM</p>
+          <p><i class="far fa-clock"></i> Domingos: Cerrado</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-content">
+      <span class="close-sidebar">&times;</span>
+      <h2 id="sidebar-title"></h2>
+      <div class="sidebar-image-container">
+        <img id="sidebar-main-image" class="sidebar-main-image" src="" alt="">
+        <div id="prevArrow" class="nav-arrow">&lt;</div>
+        <div id="nextArrow" class="nav-arrow">&gt;</div>
+      </div>
+      <div id="sidebar-gallery" class="sidebar-gallery"></div>
+      <p id="sidebar-description"></p>
+    </div>
+  </div>
+
+  <div id="whatsapp-button" class="contact-button whatsapp-button">
+    <i class="fab fa-whatsapp"></i>
+    <span>WhatsApp</span>
+  </div>
+
+  <div id="chat-button" class="contact-button chat-button">
+    <i class="fas fa-comments"></i>
+    <span>Chat</span>
+  </div>
+
+  <div id="chat-window" class="chat-window">
+    <div class="chat-header">
+      <h3>Chat con nosotros</h3>
+      <span class="close-chat">&times;</span>
+    </div>
+    <div class="chat-body">
+      <p>¡Hola! ¿En qué podemos ayudarte hoy?</p>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chat-message" placeholder="Escribe tu mensaje...">
+      <button onclick="sendChatMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <div id="quiz-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Diagnóstico Rápido</h2>
+      <div id="quiz-container"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentImageIndex = 0;
+    let currentService = '';
+
+    const sidebar = document.getElementById("sidebar");
+    const closeSidebarBtn = document.getElementsByClassName("close-sidebar")[0];
+    const sidebarTitle = document.getElementById("sidebar-title");
+    const sidebarMainImage = document.getElementById("sidebar-main-image");
+    const sidebarGallery = document.getElementById("sidebar-gallery");
+    const sidebarDescription = document.getElementById("sidebar-description");
+
+    const services = {
+      mecanica: {
+        title: "Mecánica General",
+        images: [
+          "img-taller/arrancador.jpg",
+          "img-taller/alternador.jpg",
+          "img-taller/baterias.jpg",
+          "img-taller/mecanica2.jpg",
+        ],
+        descriptions: [
+          "Nuestro taller de mecánica general ofrece servicios de alta calidad para mantener tu vehículo en óptimas condiciones.",
+          "Realizamos diagnósticos precisos utilizando tecnología de punta para identificar y resolver problemas mecánicos.",
+          "Nuestro equipo de mecánicos altamente capacitados se asegura de que tu vehículo reciba el mejor cuidado posible.",
+          "Ofrecemos una amplia gama de servicios, desde mantenimiento rutinario hasta reparaciones complejas del motor."
+        ]
+      },
+      electromecanica: {
+        title: "Electromecánica",
+        images: [
+          "img-taller/focosPulido.jpg",
+          "img-taller/alternador.jpg",
+          "img-taller/baterias.jpg",
+          "img-taller/mecanica2.jpg",
+        ],
+        descriptions: [
+          "Nuestro servicio de electromecánica aborda todos los sistemas eléctricos y electrónicos de tu vehículo.",
+          "Reparamos y reemplazamos alternadores y arranques para mantener tu vehículo funcionando sin problemas.",
+          "Ofrecemos diagnóstico y reparación de sistemas de inyección electrónica para optimizar el rendimiento del motor.",
+          "Nuestros técnicos están capacitados para manejar complejos sistemas eléctricos en vehículos modernos."
+        ]
+      },
+      motores: {
+        title: "Venta de Motores",
+        images: [
+          "img-taller/MOTOR DAIHATSU DELTA.jpg",
+          "img-taller/alternador.jpg",
+          "img-taller/limpieza.jpg",
+          "img-taller/mecanica2.jpg",
+        ],
+        descriptions: [
+          "Ofrecemos una amplia selección de motores nuevos y reconstruidos para todas las marcas y modelos.",
+          "Nuestros motores pasan por rigurosas pruebas de calidad para garantizar su rendimiento y durabilidad.",
+          "Disponemos de opciones tanto para vehículos de gasolina como diésel, adaptándonos a tus necesidades.",
+          "Brindamos asesoramiento experto para ayudarte a elegir el motor adecuado para tu vehículo."
+        ]
+      },
+      repuestos: {
+        title: "Venta de Repuestos",
+        images: [
+          "img-taller/turboNissanFrontier.jpg",
+          "img-taller/alternador.jpg",
+          "img-taller/baterias.jpg",
+          "img-taller/mecanica2.jpg",
+        ],
+        descriptions: [
+          "Contamos con un amplio inventario de repuestos originales y alternativos para todas las marcas y modelos.",
+          "Ofrecemos repuestos de alta calidad para sistemas de frenos, suspensión, motor y más.",
+          "Nuestro equipo de expertos puede ayudarte a encontrar la pieza exacta que necesitas para tu vehículo.",
+          "Garantizamos la calidad de nuestros repuestos para asegurar el óptimo funcionamiento de tu vehículo."
+        ]
+      },
+      enderezado: {
+        title: "Enderezado, Pintura, Remolque y Trámites INS",
+        images: [
+          "/img-taller/chocados/1.jpeg",
+          "/img-taller/chocados/2.jpg",
+          "/img-taller/chocados/3.jpg",
+          "/img-taller/chocados/4.jpg",
+          "/img-taller/chocados/5.jpg",
+          "/img-taller/chocados/2.jpg",
+          "/img-taller/chocados/5.jpg",
+          "/img-taller/chocados/4.jpg",
+        ],
+        descriptions: [
+          "Nuestro servicio de enderezado devuelve la forma original a tu vehículo después de un accidente.",
+          "Utilizamos técnicas avanzadas de enderezado para garantizar la integridad estructural de tu vehículo.",
+          "Nuestro servicio de pintura ofrece acabados de alta calidad que protegen y embellecen tu vehículo.",
+          "Contamos con una amplia gama de colores y realizamos igualación precisa para un acabado perfecto.",
+          "Ofrecemos servicio de remolque 24/7 para asistirte en caso de averías o accidentes.",
+          "Nuestros remolques están equipados para transportar todo tipo de vehículos de forma segura.",
+          "Te ayudamos con los trámites del INS, simplificando el proceso de reclamos y reparaciones.",
+          "Nuestro equipo está capacitado para manejar eficientemente todos los aspectos de los trámites del INS."
+        ]
+      },
+      alineamiento: {
+        title: "Alineamiento y Tramado",
+        images: [
+          "img-taller/tramado/1.jpg",
+          "img-taller/tramado/2.jpg",
+          "img-taller/tramado/3.jpg",
+          "img-taller/tramado/4.jpg",
+        ],
+        descriptions: [
+          "Nuestro servicio de alineamiento garantiza una conducción suave y segura, reduciendo el desgaste de los neumáticos.",
+          "Utilizamos tecnología de punta para realizar alineamientos precisos en todos los tipos de vehículos.",
+          "El servicio de tramado mejora la estabilidad y el manejo de tu vehículo, especialmente en curvas y a altas velocidades.",
+          "Nuestros técnicos especializados realizan un diagnóstico completo antes de proceder con el alineamiento y tramado."
+        ]
+      },
+      usados: {
+        title: "Venta de Vehículos Usados",
+        images: [
+          "img-taller/usados/1.jpg",
+          "img-taller/usados/2.jpeg",
+          "img-taller/usados/3.jpeg",
+          "img-taller/usados/6.jpeg",
+          "img-taller/usados/7.jpeg",
+        ],
+        descriptions: [
+          "Ofrecemos una amplia selección de vehículos usados de diversas marcas y modelos.",
+          "Todos nuestros vehículos usados pasan por una rigurosa inspección para garantizar su calidad.",
+          "Brindamos financiamiento y opciones de garantía extendida para tu tranquilidad.",
+          "Nuestro equipo de ventas te asesorará para encontrar el vehículo perfecto que se ajuste a tus necesidades y presupuesto."
+        ]
+      }
+    };
+
+    function smoothScroll(target, duration) {
+      var targetElement = document.querySelector(target);
+      var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+      var startPosition = window.pageYOffset;
+      var distance = targetPosition - startPosition;
+      var startTime = null;
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        var timeElapsed = currentTime - startTime;
+        var run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      }
+
+      function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+      }
+
+      requestAnimationFrame(animation);
+    }
+
+    function sendEmail() {
+      window.location.href = "mailto:info@multiserviciosobaflet.com";
+    }
+
+    function openSidebar(service) {
+      currentService = service;
+      const serviceData = services[service];
+      sidebarTitle.textContent = serviceData.title;
+      currentImageIndex = 0;
+      updateSidebarImage();
+
+      sidebarGallery.innerHTML = '';
+      serviceData.images.forEach((img, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = img;
+        thumbnail.alt = `${serviceData.title} - Imagen ${index + 1}`;
+        thumbnail.onclick = () => {
+          currentImageIndex = index;
+          updateSidebarImage();
+        };
+        sidebarGallery.appendChild(thumbnail);
+      });
+
+      sidebar.classList.add("open");
+    }
+
+    function updateSidebarImage() {
+      const serviceData = services[currentService];
+      sidebarMainImage.src = serviceData.images[currentImageIndex];
+      sidebarMainImage.alt = `${serviceData.title} - Imagen ${currentImageIndex + 1}`;
+
+      sidebarDescription.textContent = serviceData.descriptions[currentImageIndex];
+
+      document.getElementById('prevArrow').style.display = currentImageIndex > 0 ? 'block' : 'none';
+      document.getElementById('nextArrow').style.display = currentImageIndex < serviceData.images.length - 1 ? 'block' : 'none';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+    }
+
+    closeSidebarBtn.onclick = closeSidebar;
+
+    document.addEventListener('keydown', function (event) {
+      if (sidebar.classList.contains("open")) {
+        if (event.key === "Escape") {
+          closeSidebar();
+        } else if (event.key === "ArrowLeft") {
+          navigateImage(-1);
+        } else if (event.key === "ArrowRight") {
+          navigateImage(1);
+        }
+      }
+      if (event.key === "Escape" && chatWindow.style.display === 'flex') {
+        chatWindow.style.display = 'none';
+      }
+    });
+
+    function navigateImage(direction) {
+      const serviceData = services[currentService];
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) currentImageIndex = serviceData.images.length - 1;
+      if (currentImageIndex >= serviceData.images.length) currentImageIndex = 0;
+      updateSidebarImage();
+    }
+
+    document.getElementById('prevArrow').addEventListener('click', () => navigateImage(-1));
+    document.getElementById('nextArrow').addEventListener('click', () => navigateImage(1));
+
+    const chatButton = document.getElementById('chat-button');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChatButton = document.querySelector('.close-chat');
+
+    chatButton.addEventListener('click', () => {
+      chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+    });
+
+    closeChatButton.addEventListener('click', () => {
+      chatWindow.style.display = 'none';
+    });
+
+    document.addEventListener('click', function (event) {
+      const chatWindow = document.getElementById('chat-window');
+      const chatButton = document.getElementById('chat-button');
+
+      if (chatWindow.style.display === 'flex' &&
+        !chatWindow.contains(event.target) &&
+        !chatButton.contains(event.target)) {
+        chatWindow.style.display = 'none';
+      }
+    });
+
+    function sendChatMessage() {
+      const messageInput = document.getElementById('chat-message');
+      const message = messageInput.value.trim();
+      if (message !== '') {
+        const chatBody = document.querySelector('.chat-body');
+        chatBody.innerHTML += `<p><strong>Tú:</strong> ${message}</p>`;
+        messageInput.value = '';
+        setTimeout(() => {
+          chatBody.innerHTML += `<p><strong>Servicio al cliente:</strong> Gracias por tu mensaje. Un representante se pondrá en contacto contigo pronto.</p>`;
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }, 1000);
+      }
+    }
+
+    document.getElementById('chat-message').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    });
+
+    const quizQuestions = [
+      {
+        question: "¿Qué problema estás experimentando con tu vehículo?",
+        options: ["Ruidos extraños", "Problemas al arrancar", "Pérdida de potencia", "Problemas de frenos"],
+      },
+      {
+        question: "¿Cuándo notaste el problema por primera vez?",
+        options: ["Hoy", "Esta semana", "Este mes", "Hace más de un mes"],
+      },
+      {
+        question: "¿El problema ocurre con más frecuencia cuando el motor está...?",
+        options: ["Frío", "Caliente", "No importa la temperatura", "No estoy seguro"],
+      },
+    ];
+
+    function startQuiz() {
+      const quizContainer = document.getElementById('quiz-container');
+      quizContainer.innerHTML = '';
+
+      quizQuestions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.innerHTML = `
+            <h3>Pregunta ${index + 1}: ${q.question}</h3>
+            ${q.options.map(option => `
+              <label>
+                <input type="radio" name="q${index}" value="${option}">
+                ${option}
+              </label>
+            `).join('')}
+          `;
+        quizContainer.appendChild(questionDiv);
+      });
+
+      const submitButton = document.createElement('button');
+      submitButton.textContent = 'Enviar';
+      submitButton.onclick = submitQuiz;
+      quizContainer.appendChild(submitButton);
+
+      document.getElementById('quiz-modal').style.display = 'block';
+    }
+
+    function closeQuizModal() {
+      document.getElementById('quiz-modal').style.display = 'none';
+    }
+
+    // Event listeners for closing the modal
+    document.addEventListener('keydown', function (event) {
+      if (event.key === "Escape") {
+        closeQuizModal();
+      }
+    });
+
+    document.addEventListener('click', function (event) {
+      const modal = document.getElementById('quiz-modal');
+      if (event.target === modal) {
+        closeQuizModal();
+      }
+    });
+
+    document.querySelector('.close-modal').addEventListener('click', closeQuizModal);
+
+    function submitQuiz() {
+      const results = [];
+      quizQuestions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected) {
+          results.push(selected.value);
+        }
+      });
+
+      if (results.length === quizQuestions.length) {
+        alert('Basado en tus respuestas, te recomendamos traer tu vehículo para una revisión completa. Contáctanos para agendar una cita.');
+        closeQuizModal();
+      } else {
+        alert('Por favor responde todas las preguntas.');
+      }
+    }
+
+    document.getElementById('whatsapp-button').addEventListener('click', () => {
+      window.open('https://wa.me/50612345678', '_blank');
+    });
+  </script>
+</body>
+
+</html>
